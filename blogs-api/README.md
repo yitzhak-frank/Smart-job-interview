@@ -1,4 +1,4 @@
-# Posts Api README
+# Blogs Api README
 
 ## Routes
 
