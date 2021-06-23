@@ -19,7 +19,7 @@ _Body_ - {
 **Login**:  
 _Method_ - POST  
 _Route_ - `/users/login`  
-_Body_ {  
+_Body_ - {  
 &emsp; `username`: string  
 &emsp; `password`: string  
 }
