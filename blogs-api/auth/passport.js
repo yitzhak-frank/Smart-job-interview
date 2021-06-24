@@ -6,10 +6,10 @@ const { UsersModel } = require('../models/users_model');
 passport.use(new LocalStrategy (async (username, password, done) => {
   try {
     const user = await UsersModel.findOne({ username: username });
-    if(!user) return done(null, false);
+    if(!user) return done(null, false, { message: 'Username does not exist' });
 
     const verify = await bcrypt.compare(password, user.password);
-    if(!verify) return done(null, false);
+    if(!verify) return done(null, false, { message: 'Wrong password' });
 
     return done(null, user);
   } catch (err) {

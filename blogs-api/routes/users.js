@@ -26,7 +26,10 @@ router.post('/login',
   (req, res) => res.json('Successfully login')
 );
 
-router.get('/login-failure', (req, res) => res.status(401).json('login failed'));
+router.get('/login-failure', (req, res) => {
+  const [ error ] = req.flash('error');
+  res.status(401).json(error || 'Login failed');
+});
 
 router.get('/logout', (req, res) => {
   req.logout();

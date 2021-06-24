@@ -4,6 +4,7 @@ const path         = require('path');
 const cookieParser = require('cookie-parser');
 const logger       = require('morgan');
 const passport     = require('passport');
+const flash        = require('connect-flash');
 
 const postsRouter = require('./routes/posts');
 const usersRouter = require('./routes/users');
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('express-session')({ secret: secretWord, resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use('/posts', postsRouter);
 app.use('/users', usersRouter);
