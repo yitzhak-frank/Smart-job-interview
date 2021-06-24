@@ -1,7 +1,7 @@
 const passport      = require('passport');
 const bcrypt        = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
-const UsersModel    = require('../models/users_model');
+const { UsersModel } = require('../models/users_model');
 
 passport.use(new LocalStrategy (async (username, password, done) => {
   try {

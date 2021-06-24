@@ -1,4 +1,15 @@
 const mongoose = require('mongoose');
+const joi = require('joi');
+
+// Validate the post before connecting to db.
+exports.validPost = post => {
+    const schema = joi.object({
+        title:     joi.string().required(),
+        body:      joi.string().required(),
+        author_id: joi.string().required()
+    });
+    return schema.validate(post);
+}
 
 const postsSchema = new mongoose.Schema({
     title: {
@@ -10,16 +21,16 @@ const postsSchema = new mongoose.Schema({
         required: true
     },
     create_date: {
-        type:    Date,
-        default: Date.now(),
+        type:      Date,
+        default:   Date.now(),
         immutable: true 
     },
     author_id: {
-        type:     mongoose.Schema.Types.ObjectId,
-        ref:      'users',
-        required: true,
+        type:      mongoose.Schema.Types.ObjectId,
+        ref:       'users',
+        required:  true,
         immutable: true 
     }
 });
 
-module.exports = mongoose.model('posts', postsSchema);
+exports.PostsModel = mongoose.model('posts', postsSchema);

@@ -1,10 +1,13 @@
-const express    = require('express');
-const bcrypt     = require('bcrypt');
-const UsersModel = require('../models/users_model');
-const passport   = require('passport');
-const router     = express.Router();
+const express  = require('express');
+const bcrypt   = require('bcrypt');
+const passport = require('passport');
+const router   = express.Router();
+const { UsersModel, validUser } = require('../models/users_model');
 
 router.post('/sign-up', async (req, res) => {
+  const { error } = validUser(req.body);
+  if(error) return res.status(400).json(error.details);
+
   try {
     const salt = await bcrypt.genSalt(10);
     req.body.password = await bcrypt.hash(req.body.password, salt);

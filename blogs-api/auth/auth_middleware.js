@@ -1,4 +1,4 @@
-const PostsModel = require('../models/posts_model');
+const { PostsModel } = require('../models/posts_model');
 
 // Verify that user is logged in.
 exports.authUser = (req, res, next) => {
