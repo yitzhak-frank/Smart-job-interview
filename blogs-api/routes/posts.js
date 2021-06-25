@@ -5,28 +5,28 @@ const { PostsModel, validPost } = require('../models/posts_model');
 const { authUser, authAuthor } = require('../auth/auth_middleware');
 
 // The query to get post author info.
-const aggQuery = { $lookup: { from: 'users', localField: 'author_id', foreignField: '_id', as: 'auther_info' } };
+const aggQuery = { $lookup: { from: 'users', localField: 'author_id', foreignField: '_id', as: 'author_info' } };
 
 // Post fields to send back to the client.
 const postFields = { _id: 1, author_id: 1, title: 1, body: 1, create_date: 1 };
 
 router.get('/posts', (req, res) => {
     // Author fields to send back to the client.
-    const auther_info = { first_name: 1, last_name: 1 };
+    const author_info = { first_name: 1, last_name: 1 };
     PostsModel
-        .aggregate([ aggQuery, { $project: { ...postFields, auther_info } } ])
+        .aggregate([ aggQuery, { $project: { ...postFields, author_info } } ])
         .then(result => res.json(result))
         .catch(err => res.status(400).json(err));
 });
 
 router.get('/post/:id', (req, res) => {
     // Author fields to send back to the client.
-    const auther_info =  {_id: 1, first_name: 1, last_name: 1, age: 1, birth_date: 1 };
+    const author_info =  {_id: 1, first_name: 1, last_name: 1, age: 1, birth_date: 1 };
     PostsModel
         .aggregate([
             { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
             aggQuery,
-            { $project: { ...postFields, auther_info } }
+            { $project: { ...postFields, author_info } }
         ])
         .then(result => res.json(result[0]))
         .catch(err => res.status(400).json(err));
